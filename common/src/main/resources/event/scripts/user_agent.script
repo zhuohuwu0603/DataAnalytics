@@ -1,0 +1,24 @@
+
+    val event_type = (event \ "event_type").values.toString
+    event_type match {
+      case "analytics.view" | "analytics.engage" =>  {
+        (event \ "ua" \ "nu") match {
+          case JNothing | JNull => {
+            Some("unknown")
+          }
+          case value => {
+              handler(value.values.toString)
+          }
+        }
+      }
+      case _ => { // content events
+        (event \ "user_agent") match {
+          case JNothing | JNull => {
+            Some("unknown")
+          }
+          case value => {
+             handler(value.values.toString)
+          }
+        }
+      }
+    }

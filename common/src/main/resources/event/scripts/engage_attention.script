@@ -1,0 +1,14 @@
+
+val version = (event \ "version").values.toString.toInt
+
+(event \ "engage" \ "time") match {
+  case JNothing | JNull => {
+    Some("0")
+  }
+  case value => {
+    if(version < 2)
+      Some((value.values.toString.toDouble*1000).toLong.toString)
+    else
+      Some(value.values.toString)
+  }
+}

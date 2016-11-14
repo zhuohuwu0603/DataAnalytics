@@ -1,0 +1,21 @@
+
+val referral = (event \ "view" \ "ref" \ "medium") match {
+  case JNothing | JNull => {
+    "unknown"
+  }
+  case value => value.values.toString
+}
+
+if(referral == "referral") {
+  (event \ "view" \ "ref" \ "source") match {
+    case JNothing | JNull => {
+      Some("unknown")
+    }
+    case value => {
+        handler(value.values.toString)
+    }
+  }
+}
+else {
+  Some(referral)
+}

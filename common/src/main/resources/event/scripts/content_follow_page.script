@@ -1,0 +1,10 @@
+
+event \ "content_uuid" match {
+      case JNothing | JNull => {
+        Some("00000000-0000-0000-0000-000000000000")
+      }
+      case value => {
+        if ((event \ "content_type").values.toString == "page") Some(value.values.toString)
+        else Some("00000000-0000-0000-0000-000000000000")
+      }
+    }
