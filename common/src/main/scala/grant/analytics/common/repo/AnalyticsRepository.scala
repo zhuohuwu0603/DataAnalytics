@@ -5,7 +5,8 @@ import grant.analytics.common.event.alternative.AnalyticsEvent
 /**
  * Created by grant on 2016-11-14.
  */
-trait AnalyticsRepository[EVENT] {
-  type CONTAINER <: RepositoryContainer[EVENT]
+trait AnalyticsRepository {
+  type EVENT
+  type CONTAINER <: DomainObjectCollection[EVENT]
   def save(domain_objects: CONTAINER)
 }
