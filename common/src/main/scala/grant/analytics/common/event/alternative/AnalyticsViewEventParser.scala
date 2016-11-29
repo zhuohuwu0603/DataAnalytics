@@ -9,5 +9,5 @@ import org.json4s.JsonAST.JValue
 class AnalyticsViewEventParser extends AnalyticsEventParser{
   override type EVENTTYPE = AnalyticsViewEvent
 
-  override def parse(json: JValue): AnalyticsEvent = ???
+  override def parse(json: JValue): AnalyticsViewEvent = ???
 }

@@ -3,7 +3,7 @@ import sbt._
 
 object Dependencies {
   val scala_main_version = "2.11"
-  val spark_version = "2.0.1"
+  val spark_version = "2.0.2"
   val kafka_version = "0-8"
 
   val scala_compiler = "org.scala-lang" % "scala-compiler" % "2.11.8"

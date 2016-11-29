@@ -18,7 +18,7 @@ import scala.io.Source
   */
 class GeneralAnalyticsEventParser(val section_trees_handler: (UUID => List[UUID]), private val definition_url:URL = new URL("classpath:viafoura/analytics/events/events.conf") ) extends AnalyticsEventParser with Serializable{
 
-  type EVENTTYPE = GeneralAnalyticsEvent
+  override type EVENTTYPE = GeneralAnalyticsEvent
   /*
       event_definitions: key is event_type
    */
