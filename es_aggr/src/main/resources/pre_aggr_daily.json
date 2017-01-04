@@ -1,0 +1,93 @@
+{
+  "template":"pre_aggr_daily",
+  "mappings":{
+    "counts":{
+      "dynamic":false,
+      "_source":{
+        "enabled":false
+      },
+      "properties":{
+        "content":{
+          "type": "string",
+          "index": "not_analyzed",
+          "store": false
+        },
+        "day":{
+          "type":"long",
+          "index":"not_analyzed",
+          "store": false
+        },
+        "feature":{
+          "type": "string",
+          "index": "not_analyzed",
+          "store": false
+        },
+        "filter":{
+          "properties":{
+            "all":{
+              "type": "long",
+              "index": "no",
+              "store": true
+            },
+            "device":{
+              "properties":{
+                "name":{
+                  "type": "string",
+                  "index": "not_analyzed",
+                  "store": false
+                },
+                "counts_per_minute":{
+                  "type": "long",
+                  "index": "no",
+                  "store": true
+                }
+              }
+            },
+            "referral_type":{
+              "properties":{
+                "name":{
+                  "type": "string",
+                  "index": "not_analyzed",
+                  "store": false
+                },
+                "counts_per_minute":{
+                  "type": "long",
+                  "index": "no",
+                  "store": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "uniques":{
+      "dynamic":false,
+      "_source":{
+        "enabled":false
+      },
+      "properties":{
+        "content":{
+          "type": "string",
+          "index": "not_analyzed",
+          "store": false
+        },
+        "day":{
+          "type":"long",
+          "index":"not_analyzed",
+          "store": false
+        },
+        "feature":{
+          "type": "string",
+          "index": "not_analyzed",
+          "store": false
+        },
+        "hll":{
+          "type":"string",
+          "index":"no",
+          "store":true
+        }
+      }
+    }
+  }
+}

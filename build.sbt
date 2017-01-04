@@ -1,4 +1,4 @@
-import Dependencies._
+import Dependencies.{default_dependencies_seq, _}
 import Resolvers._
 
 lazy val commonSettings = Seq(
@@ -74,4 +74,13 @@ lazy val stats = (project in file("stats")).dependsOn(common).settings(commonSet
   name := "stats",
   version := "0.0.1",
   libraryDependencies ++= (default_dependencies_seq ++ Seq(scala_compiler))
+)
+
+lazy val es_aggr = (project in file("es_aggr")).dependsOn(common).settings(commonSettings: _*).settings(
+  name := "es_aggr",
+  version := "0.0.1",
+  libraryDependencies ++= (default_dependencies_seq ++ Seq(
+    elasticsearch,
+    elasticsearch_spark
+  ))
 )

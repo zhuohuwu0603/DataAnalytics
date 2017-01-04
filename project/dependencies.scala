@@ -50,6 +50,8 @@ object Dependencies {
   val mysql_connector_java = "mysql" % "mysql-connector-java" % "5.1.17"
   val mysql_connector_mxj =  "mysql" % "mysql-connector-mxj" % "5.0.12"
   val mysql_connector_mxj_db_file = "mysql" % "mysql-connector-mxj-db-files" % "5.0.12"
+  val twitter_algebird = "com.twitter" % "algebird-core_2.11" % "0.11.0"
+
 
 
   val default_dependencies_seq = Seq(
@@ -61,6 +63,7 @@ object Dependencies {
     typesafe_config_lib,
     google_guice,
     aspectj,
+    twitter_algebird,
     hadoop_aws,
     scalatest % Test,
     junit  % Test
