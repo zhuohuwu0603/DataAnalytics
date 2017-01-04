@@ -44,11 +44,33 @@ case class Value(val filter_type:String,
                  val filter_instance_name:String,
                  val values:Seq[Long])
 
+case class Key1(val uuid:String,
+                val event_type:String,
+                val minute:Int)
+case class Key2(val uuid:String,
+                val event_type:String,
+                val minute:Int,
+                val device:String)
+case class Key2WithDevice(val uuid:String,
+                          val feature:String,
+                          val device:String)
+case class Key3(val uuid:String,
+                val event_type:String,
+                val minute:Int,
+                val referral:String)
+case class Key2WithReferral(val uuid:String,
+                            val feature:String,
+                            val referral:String)
+
 case class FilteredCountEntity(val uuid:String,
                                val feature:String,
                                val filter_type:String,
                                val filter_instance_name:String,
                                val values:Array[Long])
+
+case class FilteredUniqueEntity(val uuid:String,
+                                val feature:String,
+                                val hash_value:Int)
 
 
 case class FilterDevice(val hour:Int,
