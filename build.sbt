@@ -84,3 +84,11 @@ lazy val es_aggr = (project in file("es_aggr")).dependsOn(common).settings(commo
     elasticsearch_spark
   ))
 )
+
+lazy val restperformance = (project in file("restperformance")).dependsOn(common).settings(commonSettings:_*).settings(
+  name := "rest-performance",
+  version := "0.0.1",
+  libraryDependencies ++= (default_dependencies_seq ++ Seq(
+    jmeter_http
+  ))
+)

@@ -52,6 +52,9 @@ object Dependencies {
   val mysql_connector_mxj_db_file = "mysql" % "mysql-connector-mxj-db-files" % "5.0.12"
   val twitter_algebird = "com.twitter" % "algebird-core_2.11" % "0.11.0"
 
+  val jmeter_http = "org.apache.jmeter" % "ApacheJMeter_http" % "3.1"
+  val typesafe_config = "com.typesafe" % "config" % "1.3.1"
+
 
 
   val default_dependencies_seq = Seq(
