@@ -17,7 +17,7 @@ class DefaultAnalyticsEventParserContainer extends AnalyticsEventParserContainer
   private def createCache():HashMap[String, AnalyticsEventParser] = {
     HashMap(
       "analytics.view" -> new AnalyticsViewEventParser,
-      "analytics.engage" -> new AnalyticsEngageEventParser,
+      "analytics.engage" -> new AnalyticsEngageEventParser
     )
   }
 

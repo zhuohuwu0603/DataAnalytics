@@ -5,22 +5,21 @@ import java.text.DateFormat
 
 import grant.analytics.performance.model.RequestGroup
 import grant.analytics.performance.model.engine.TestEngine
-import org.apache.jmeter.config.{Arguments, ConfigTestElement}
 import org.apache.jmeter.control.LoopController
 import org.apache.jmeter.engine.StandardJMeterEngine
-import org.apache.jmeter.protocol.http.sampler.HTTPSampler
+import org.apache.jmeter.protocol.http.control.{Cookie, CookieManager}
+import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy
 import org.apache.jmeter.reporters.ResultCollector
 import org.apache.jmeter.samplers.SampleSaveConfiguration
 import org.apache.jmeter.testelement.TestPlan
+import org.apache.jmeter.threads.ThreadGroup
 import org.apache.jmeter.util.JMeterUtils
 import org.apache.jorphan.collections.HashTree
-import org.apache.jmeter.threads.ThreadGroup
-
 
 /**
-  * Created by grant on 2017-01-20.
+  * Created by grant on 2017-01-17.
   */
-class JMeterTestEngine(host:String, port:Int, config: Map[String, String]) extends TestEngine{
+class JMeterTestEngine(config: Map[String, String], vf_session:String = null) extends TestEngine{
 
   private lazy val engine = createEngine()
 
@@ -49,37 +48,52 @@ class JMeterTestEngine(host:String, port:Int, config: Map[String, String]) exten
 
   override def run(groups: List[RequestGroup]): Unit = {
 
-    val hashTree = new HashTree()
+    val testPlanTree = new HashTree()
 
-    val plan = new TestPlan("Analytics-Dispatcher REST API")
-
-    hashTree.add(plan)
-
-    val defaults = new ConfigTestElement
-    defaults.setProperty("HTTPSampler.domain", host)
-    defaults.setProperty("HTTPSampler.port", port)
-    defaults.setProperty("HTTPSampler.protocol", "https")
-    defaults.setProperty("HTTPSampler.contentEncoding", "json/application")
-    defaults.setProperty("HTTPSampler.implementation", "HttpClient4")
+    val testPlan = new TestPlan("Analytics-Dispatcher REST API")
 
     val controller = new LoopController
     controller.setLoops(1)
     controller.setFirst(true)
+    controller.initialize()
 
-    val requests =
-      groups.flatMap(group => {
-        group.requests.map(request => {
-          val sampler = new HTTPSampler()
-          sampler.setPath(request.path)
-          val args = new Arguments
-          request.args.foreach(tuple => {
-            args.addArgument(tuple._1, tuple._2)
-          })
-          sampler.setArguments(args)
-          sampler.setMethod(request.method)
-          sampler
+    val samplers =
+    groups.flatMap(group => {
+      group.requests.map(request => {
+        val sampler = new HTTPSamplerProxy()
+        sampler.setName(request.path)
+        sampler.setDomain(request.host)
+        sampler.setPort(request.port)
+        sampler.setProtocol(request.protocol)
+        sampler.setContentEncoding(request.content_encoding)
+        sampler.setImplementation("HttpClient4")
+        sampler.setPath(request.path)
+        request.args.foreach(tuple => {
+          sampler.addNonEncodedArgument(tuple._1, tuple._2, "=")
         })
+        sampler.setMethod(request.method)
+
+        if(vf_session != null){
+          val cookieMgr = new CookieManager
+          val cookie = new Cookie()
+          cookie.setName("VfSess")
+          cookie.setValue(vf_session)
+          cookie.setDomainSpecified(true)
+          cookie.setDomain(".viafoura.co")
+          cookie.setPathSpecified(true)
+          cookie.setSecure(false)
+          cookie.setExpires(0)
+          cookie.setPath("/")
+          cookieMgr.add(cookie)
+          cookieMgr.setCookiePolicy("standard")
+          cookieMgr.setImplementation("org.apache.jmeter.protocol.http.control.HC4CookieHandler")
+          cookieMgr.setClearEachIteration(true)
+          cookieMgr.testStarted() // weird function call, if it is not called, the internal cookieHandler won't be initialized
+          sampler.setCookieManager(cookieMgr)
+        }
+        sampler
       })
+    })
 
     val threadGroup = new ThreadGroup
     threadGroup.setNumThreads(
@@ -93,7 +107,7 @@ class JMeterTestEngine(host:String, port:Int, config: Map[String, String]) exten
 
     val listener = new ResultCollector()
     listener.setFilename(config.get("output_file_path").get)
-
+    
     val sampleSaveConf = new SampleSaveConfiguration()
     sampleSaveConf.setAssertionResultsFailureMessage(true)
     sampleSaveConf.setAssertions(true)
@@ -128,19 +142,15 @@ class JMeterTestEngine(host:String, port:Int, config: Map[String, String]) exten
 
     listener.setSaveConfig(sampleSaveConf)
 
-    plan.addThreadGroup(threadGroup)
+    testPlanTree.add(testPlan)
 
+    val threadGroupTree = testPlanTree.add(testPlan, threadGroup)
 
-
-    val threadGroupTree = hashTree.add(plan, threadGroup)
-
-    threadGroupTree.add(defaults)
     threadGroupTree.add(listener)
 
-    requests.foreach(threadGroupTree.add(_))
+    samplers.foreach(threadGroupTree.add(_))
 
-
-    engine.configure(hashTree)
+    engine.configure(testPlanTree)
 
     engine.run
 
