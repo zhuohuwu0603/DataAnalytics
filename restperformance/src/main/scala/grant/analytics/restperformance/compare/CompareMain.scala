@@ -7,6 +7,8 @@ import java.util.concurrent.{CountDownLatch, Executors}
 import com.typesafe.config.ConfigFactory
 import grant.analytics.common.url.ClasspathURLEnabler
 import grant.analytics.performance.app.impl.PerformanceTestImpl
+import grant.analytics.restperformance.output.PerformanceTestResponse
+import grant.analytics.restperformance.output.impl.TextFileOutput
 
 import scala.collection.convert.WrapAsScala
 import scala.xml.XML
@@ -33,47 +35,32 @@ object CompareMain extends App with ClasspathURLEnabler{
   })
 
   latch.await()
+  executors.shutdown()
 
-  val output = new BufferedWriter(new FileWriter( new File(config.getString("viafoura.analytics.performance.compare.compare_output_file"))))
+  val responses =
+    WrapAsScala.asScalaBuffer(
+      config.getStringList("viafoura.analytics.performance.compare.test_output_files")
+    ).flatMap(file => {
 
-  WrapAsScala.asScalaBuffer(
-    config.getStringList("viafoura.analytics.performance.compare.test_output_files")
-  ).flatMap(file => {
+      val category = file.substring(file.lastIndexOf("/") + 1, file.lastIndexOf("."))
 
-    val category = file.substring(file.lastIndexOf("/") + 1, file.lastIndexOf("."))
+      (XML.loadFile(new File(file)) \ "httpSample").map(node => {
 
-    (XML.loadFile(new File(file)) \ "httpSample").map(node => {
+        PerformanceTestResponse(
+          (node \ "java.net.URL").text match {
+            case pattern(path) => path
+          },
+          (node \ "@t").text.toLong,
+          (node \ "responseData").text,
+          category
+        )
+      })
+    }).toList
 
-      PerformanceTestResponse(
-        (node \ "java.net.URL").text match {
-          case pattern(path) => path
-        },
-        (node \ "@t").text.toLong,
-        (node \ "responseData").text,
-        category
-      )
-    })
-  }).groupBy(response => {
-    response.path
-  }).foreach(tuple => {
-    output.write(tuple._1)
-    output.write("\n")
-    tuple._2.foreach(response => {
-      output.write(s"${indent}")
-      output.write(response.category)
-      output.write("\n")
-      output.write(s"${indent}${indent}")
-      output.write(s"response is '${response.result}'")
-      output.write("\n")
-      output.write(s"${indent}${indent}")
-      output.write(s"cost is '${response.cost}'")
-      output.write("\n")
-    })
-  })
+  val output = new TextFileOutput(config.getString("viafoura.analytics.performance.compare.compare_output_file"))
 
-  output.flush()
-  output.close()
+  output.output(responses)
 
 }
 
-case class PerformanceTestResponse(path:String, cost:Long, result:String, category:String)
+
