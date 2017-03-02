@@ -1,8 +1,6 @@
 package grant.analytics.stats.conf.impl
 
 import java.net.URL
-
-import grant.analytics.common.conf.impl.AbstractAnalyticsConfiguration
 import grant.analytics.stats.conf.StatsConfiguration
 
 /**

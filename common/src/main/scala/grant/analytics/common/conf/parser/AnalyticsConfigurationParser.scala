@@ -1,17 +1,18 @@
-package grant.analytics.common.conf
+package grant.analytics.common.conf.parser
 
-import java.util.Properties
-import grant.analytics.common.event.AnalyticsEventParser
-
+import com.typesafe.config.Config
+import grant.analytics.common.conf._
 
 /**
- * Created by grant on 2016-11-12.
- */
-trait AnalyticsConfiguration extends Configuration{
+  * Created by grant on 2017-03-02.
+  */
+trait AnalyticsConfigurationParser extends ConfigurationParser{
+  override type IN_MEMORY_TYPE = Config
+
   def getSparkConfigurations():SparkConfigurations
   def getElasticsearchConfigurations():ElasticsearchConfigurations
   def getZookeeperConfigurations():ZookeeperConfigurations
   def getCassandraConfigurations():CassandraConfigurations
   def getMysqlConfigurations():MysqlConfigurations
-  def getEventParserByEventType(event_type:String): AnalyticsEventParser
+
 }
