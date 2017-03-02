@@ -3,7 +3,7 @@ import sbt._
 
 object Dependencies {
   val scala_main_version = "2.11"
-  val spark_version = "2.0.2"
+  val spark_version = "2.1.0"
   val kafka_version = "0-8"
 
   val scala_compiler = "org.scala-lang" % "scala-compiler" % "2.11.8"
@@ -41,8 +41,8 @@ object Dependencies {
     .exclude("org.apache.hadoop", "hadoop-common")
   val scalatest = "org.scalatest" % "scalatest_2.11" % "2.2.6"
   val junit = "junit" % "junit" % "4.12"
-  val elasticsearch_spark = "org.elasticsearch" % "elasticsearch-spark_2.11" % "2.4.0"
-  val elasticsearch = "org.elasticsearch" % "elasticsearch" % "2.4.1"
+  val elasticsearch_spark = "org.elasticsearch" % "elasticsearch-spark-20_2.11" % "5.2.2"
+  val elasticsearch =  "org.elasticsearch" % "elasticsearch" % "5.2.1"
 
   val cassandra = ("org.apache.cassandra" % "cassandra-all" % "3.5").exclude("org.slf4j", "log4j-over-slf4j").exclude("org.slf4j", "slf4j-api")
   val kafka = ("org.apache.kafka" % "kafka_2.11" % "0.8.2.1")
