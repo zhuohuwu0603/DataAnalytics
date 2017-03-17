@@ -1,0 +1,52 @@
+{
+  "template":"pre_aggr_hourly_uniques*",
+  "settings":{
+    "index":{
+      "number_of_shards":"8",
+      "number_of_replicas":"1"
+    },
+    "index.mapping.ignore_malformed":true
+  },
+  "mappings":{
+    "uniques":{
+      "dynamic":false,
+      "properties":{
+        "content":{
+          "type": "string",
+          "index": "not_analyzed",
+          "store": true
+        },
+        "hour": {
+          "type": "date",
+          "format":"epoch_millis",
+          "store": false
+        },
+        "feature":{
+          "type": "string",
+          "index": "not_analyzed",
+          "store": true
+        },
+        "referral":{
+          "type": "string",
+          "index": "not_analyzed",
+          "store": true
+        },
+        "hll":{
+          "type":"string",
+          "index":"no",
+          "store":true
+        },
+        "id":{
+          "type": "string",
+          "index": "no",
+          "store": false
+        }
+      }
+    }
+  },
+  "aliases":{
+    "alias_pre_aggr_uniques":{
+
+    }
+  }
+}

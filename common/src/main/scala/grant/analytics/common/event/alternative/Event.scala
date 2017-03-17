@@ -20,7 +20,9 @@ case class AnalyticsViewEvent(override val event_uuid:UUID,
                               override val time:Long,
                               override val unique: UUID,
                               override val device: String,
-                              override val referral: String ) extends AnalyticsEvent("analytics.view", event_uuid, page_uuid, section_uuid, time, unique,device, referral)
+                              override val referral: String ,
+                             val viewcounts:Int,
+                             val recirculation:Boolean) extends AnalyticsEvent("analytics.view", event_uuid, page_uuid, section_uuid, time, unique,device, referral)
 
 case class AnalyticsEngageEvent(override val event_uuid:UUID,
                                 override val page_uuid:UUID,
@@ -29,7 +31,8 @@ case class AnalyticsEngageEvent(override val event_uuid:UUID,
                                 override val unique: UUID,
                                 override val device: String,
                                 override val referral: String,
-                                 val engage_time: Long) extends AnalyticsEvent("analytics.engage", event_uuid, page_uuid, section_uuid, time, unique,device, referral)
+                                 val engage_time: Long,
+                               val comment_attention:Long) extends AnalyticsEvent("analytics.engage", event_uuid, page_uuid, section_uuid, time, unique,device, referral)
 
 case class GeneralContentEvent(override val event_type:String,
                                override val event_uuid:UUID,

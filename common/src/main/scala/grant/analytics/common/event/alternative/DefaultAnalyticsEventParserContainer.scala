@@ -1,8 +1,5 @@
-package grant.analytics.common.event
+package grant.analytics.common.event.alternative
 
-import java.util.UUID
-
-import grant.analytics.common.event.alternative.{AnalyticsEngageEventParser, AnalyticsViewEventParser, GeneralContentEvent}
 import org.json4s.JsonAST.{JNothing, JValue}
 
 import scala.collection.immutable.HashMap
@@ -14,21 +11,21 @@ class DefaultAnalyticsEventParserContainer extends AnalyticsEventParserContainer
 
   private lazy val cache = createCache()
 
-  private def createCache():HashMap[String, AnalyticsEventParser] = {
+  private def createCache():HashMap[String, AnalyticsEventParserNonGeneral] = {
     HashMap(
       "analytics.view" -> new AnalyticsViewEventParser,
       "analytics.engage" -> new AnalyticsEngageEventParser
     )
   }
 
-  override def getParser(event_type: String): AnalyticsEventParser = {
+  override def getParser(event_type: String): AnalyticsEventParserNonGeneral = {
     cache.get(event_type) match {
       case Some(parser) => parser
       case None => new GeneralContentEventParser
     }
   }
 
-  override def getParser(json: JValue): AnalyticsEventParser = {
+  override def getParser(json: JValue): AnalyticsEventParserNonGeneral = {
     getParser(
       (json \ "event_type") match {
         case JNothing => throw new Exception("No event type attribute!")
@@ -39,7 +36,7 @@ class DefaultAnalyticsEventParserContainer extends AnalyticsEventParserContainer
 
 }
 
-class GeneralContentEventParser extends AnalyticsEventParser{
+class GeneralContentEventParser extends AnalyticsEventParserNonGeneral{
   override type EVENTTYPE = GeneralContentEvent
 
   override def parse(event: JValue): GeneralContentEvent = ???

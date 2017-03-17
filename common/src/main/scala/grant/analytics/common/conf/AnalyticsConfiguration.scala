@@ -1,7 +1,6 @@
 package grant.analytics.common.conf
 
-import java.util.Properties
-import grant.analytics.common.event.AnalyticsEventParser
+import grant.analytics.common.event.alternative.AnalyticsEventParserNonGeneral
 
 
 /**
@@ -13,5 +12,5 @@ trait AnalyticsConfiguration extends Configuration{
   def getZookeeperConfigurations():ZookeeperConfigurations
   def getCassandraConfigurations():CassandraConfigurations
   def getMysqlConfigurations():MysqlConfigurations
-  def getEventParserByEventType(event_type:String): AnalyticsEventParser
+  def getEventParserByEventType(event_type:String): AnalyticsEventParserNonGeneral
 }

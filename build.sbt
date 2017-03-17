@@ -56,7 +56,8 @@ lazy val commonSettings = Seq(
 
   assemblyShadeRules in assembly := Seq(
     ShadeRule.rename("org.apache.commons.beanutils.**" -> "org.apache.commons.shadebeanutils.@1").inAll,
-    ShadeRule.rename("org.apache.http.**" -> "org.apache.shadehttp.@1").inAll
+    ShadeRule.rename("org.apache.http.**" -> "org.apache.shadehttp.@1").inAll,
+    ShadeRule.rename("org.apache.commons.cli.**" -> "org.apache.commons.shadecli.@1").inAll
   )
 
 )
@@ -81,7 +82,8 @@ lazy val es_aggr = (project in file("es_aggr")).dependsOn(common).settings(commo
   version := "0.0.1",
   libraryDependencies ++= (default_dependencies_seq ++ Seq(
     elasticsearch,
-    elasticsearch_spark
+    elasticsearch_spark,
+    "commons-cli" % "commons-cli" % "1.3.1"
   ))
 )
 

@@ -1,6 +1,5 @@
 package grant.analytics.common.event
 
-import grant.analytics.common.event.alternative.AnalyticsEvent
 import org.json4s.JsonAST.JValue
 
 /**

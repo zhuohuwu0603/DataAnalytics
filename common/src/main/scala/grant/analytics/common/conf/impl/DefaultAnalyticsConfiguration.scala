@@ -2,7 +2,7 @@ package grant.analytics.common.conf.impl
 
 import grant.analytics.common.conf._
 import grant.analytics.common.conf.parser.AnalyticsConfigurationParser
-import grant.analytics.common.event.AnalyticsEventParser
+import grant.analytics.common.event.alternative.AnalyticsEventParserNonGeneral
 
 /**
   * Created by grant on 2017-03-02.
@@ -22,6 +22,6 @@ class DefaultAnalyticsConfiguration(parser: AnalyticsConfigurationParser) extend
 
   override def getMysqlConfigurations(): MysqlConfigurations = ???
 
-  override def getEventParserByEventType(event_type: String): AnalyticsEventParser = ???
+  override def getEventParserByEventType(event_type: String): AnalyticsEventParserNonGeneral = ???
 
 }

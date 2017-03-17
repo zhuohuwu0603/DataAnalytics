@@ -1,0 +1,20 @@
+viafoura{
+  analytics{
+    aggregation{
+      s3_root_path = "s3a://vf-apicounts-test/kafka"
+      elasticsearch_nodes = "10.3.101.171"
+      starting_hour_included = "2016-12-12T00:00:00+00:00"
+      ending_hour_excluded = "2016-12-12T02:00:00+00:00"
+      ingest_dir = "ingest-hourly-gzip"
+      content_dir = "content-events-gzip"
+      mysql{
+        url = "jdbc:mysql://10.3.100.17:3306/es_preaggr_test",
+        driver = "com.mysql.jdbc.Driver",
+        user = "grant",
+        password = "vf"
+      }
+      counts_index_prefix = "pre_aggr_hourly_counts"
+      uniques_index_prefix = "pre_aggr_hourly_uniques"
+    }
+  }
+}

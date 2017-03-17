@@ -1,21 +1,11 @@
 package grant.analytics.common.event.alternative
 
-import grant.analytics.common.event.AnalyticsEventParser
-
-import scala.collection.mutable
+import org.json4s.JsonAST.JValue
 
 /**
-  * Created by grant on 2016-11-28.
+  * Created by grant on 2017-01-03.
   */
-object AnalyticsEventParserContainer {
-
-  lazy val cache = createCache()
-
-  private def createCache():mutable.HashMap[String, AnalyticsEventParserNonGeneral] = {
-    new  mutable.HashMap[String, AnalyticsEventParserNonGeneral]
-  }
-
-  def getParser(event_type:String): Option[AnalyticsEventParserNonGeneral] = {
-    cache.get(event_type)
-  }
+trait AnalyticsEventParserContainer {
+  def getParser(event_type:String): AnalyticsEventParserNonGeneral
+  def getParser(json:JValue): AnalyticsEventParserNonGeneral
 }
