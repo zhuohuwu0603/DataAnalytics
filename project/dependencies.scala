@@ -22,7 +22,7 @@ object Dependencies {
 
   val spark_sql = ("org.apache.spark" % s"spark-sql_${scala_main_version}" % spark_version)
 
-  val spark_cassandra_connector = ("com.datastax.spark" % s"spark-cassandra-connector_${scala_main_version}" % "2.0.0-M3")
+  val spark_cassandra_connector = ("com.datastax.spark" % s"spark-cassandra-connector_${scala_main_version}" % "2.0.0")
     .exclude("com.codahale.metrics", "metrics-core")
     .exclude("io.netty", "netty-handler")
     .exclude("io.netty", "netty-buffer")
@@ -42,10 +42,13 @@ object Dependencies {
   val scalatest = "org.scalatest" % "scalatest_2.11" % "2.2.6"
   val junit = "junit" % "junit" % "4.12"
   val elasticsearch_spark = "org.elasticsearch" % "elasticsearch-spark-20_2.11" % "5.2.2"
-  val elasticsearch =  "org.elasticsearch" % "elasticsearch" % "5.2.1"
+  val elasticsearch =  "org.elasticsearch" % "elasticsearch" % "5.2.2"
+  val elasticsearch_transport = "org.elasticsearch.client" % "transport" % "5.2.2"
+//  val elasticsearch_plugin_transport_netty4 = "org.elasticsearch.plugin" % "transport-netty4-client" % "5.2.2"
+  val elasticsearch_plugin_transport_netty3 = "org.elasticsearch.plugin" % "transport-netty3-client" % "5.2.2"
 
   val cassandra = ("org.apache.cassandra" % "cassandra-all" % "3.5").exclude("org.slf4j", "log4j-over-slf4j").exclude("org.slf4j", "slf4j-api")
-  val kafka = ("org.apache.kafka" % "kafka_2.11" % "0.8.2.1")
+  val kafka_0_8_x = ("org.apache.kafka" % "kafka_2.11" % "0.8.2.1")
 
   val mysql_connector_java = "mysql" % "mysql-connector-java" % "5.1.17"
   val mysql_connector_mxj =  "mysql" % "mysql-connector-mxj" % "5.0.12"
@@ -54,6 +57,10 @@ object Dependencies {
 
   val jmeter_http = "org.apache.jmeter" % "ApacheJMeter_http" % "3.1"
   val typesafe_config = "com.typesafe" % "config" % "1.3.1"
+
+  val hsqldb =  "org.hsqldb" % "hsqldb" % "2.3.4"
+  val kafka_0_10_x = "org.apache.kafka" % "kafka_2.11" % "0.10.2.0"
+  val log4j2 = "org.apache.logging.log4j" % "log4j-api" % "2.8.1"
 
 
 
