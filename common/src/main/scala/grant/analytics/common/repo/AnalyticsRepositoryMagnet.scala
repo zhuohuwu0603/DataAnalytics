@@ -6,6 +6,8 @@ import org.apache.spark.rdd.RDD
 
 /**
  * Created by grant on 2016-11-14.
+  *
+  * in Magnet pattern, if you want to pass in multiple arguments, the corresponding implicit function should have a tuple as the input parameter
  */
 sealed trait AnalyticsRepositoryMagnet {
   type Result

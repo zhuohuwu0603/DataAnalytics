@@ -17,11 +17,14 @@ import org.elasticsearch.transport.Netty3Plugin
 import org.elasticsearch.node.internal.InternalSettingsPreparer
 import org.elasticsearch.plugins.Plugin
 
-import scala.collection.convert.WrapAsJava
-import scala.reflect.ClassTag
 
 /**
   * Created by grant on 2017-03-20.
+  *
+  * default configuration items include:
+  * cluster.name: cluster's name, which is needed when trying to get java client
+  * path.home.prefix: used as temporay directory's name prefix
+  *
   */
 class DefaultEmbeddedElasticsearch(conf:Map[String, String]) extends EmbeddedElasticsearch{
 

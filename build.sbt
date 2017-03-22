@@ -95,7 +95,7 @@ lazy val restperformance = (project in file("restperformance")).dependsOn(common
   ))
 )
 
-lazy val embedded = (project in file("embedded")).settings(commonSettings:_*).settings(
+lazy val embedded = (project in file("embedded")).dependsOn(common).settings(commonSettings:_*).settings(
   name := "embedded",
   version := "0.0.1",
   libraryDependencies ++= (default_dependencies_seq ++ Seq(
