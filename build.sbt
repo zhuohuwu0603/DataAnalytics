@@ -62,7 +62,7 @@ lazy val commonSettings = Seq(
 
 )
 
-lazy val root = project in file(".")
+lazy val data_analytics = project in file(".")
 
 //version:="0.4.7"
 lazy val common = (project in file("common")).settings(commonSettings: _*).settings(

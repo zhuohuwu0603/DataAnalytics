@@ -17,7 +17,7 @@ import scala.io.Source
   * Created by grant on 2017-03-20.
   *
   * The default configuration items include:
-  * 
+  *
   *
   */
 class DefaultEmbeddedCassandra(conf:Map[String, String]) extends EmbeddedCassandra with ClasspathURLEnabler{
