@@ -108,3 +108,11 @@ lazy val embedded = (project in file("embedded")).dependsOn(common).settings(com
     elasticsearch_plugin_transport_netty3
   ))
 )
+
+lazy val http = (project in file("http")).dependsOn(common).settings(commonSettings:_*).settings(
+  name := "http",
+  version := "0.0.1",
+  libraryDependencies ++= (default_dependencies_seq ++ Seq(
+    akka_http
+  ))
+)

@@ -61,6 +61,7 @@ object Dependencies {
   val hsqldb =  "org.hsqldb" % "hsqldb" % "2.3.4"
   val kafka_0_10_x = "org.apache.kafka" % "kafka_2.11" % "0.10.2.0"
   val log4j2 = "org.apache.logging.log4j" % "log4j-api" % "2.8.1"
+  val akka_http = "com.typesafe.akka" % "akka-http_2.11" % "10.0.5"
 
 
 
