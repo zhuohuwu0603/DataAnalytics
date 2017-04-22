@@ -116,3 +116,14 @@ lazy val http = (project in file("http")).dependsOn(common).settings(commonSetti
     akka_http
   ))
 )
+
+lazy val jetty = (project in file("jetty")).settings(commonSettings:_*).settings(
+  name := "jetty",
+  version := "0.0.1",
+  libraryDependencies ++= Seq(
+    jetty_server,
+    jetty_servlet,
+    jersey_core,
+    jersey_container
+  )
+)

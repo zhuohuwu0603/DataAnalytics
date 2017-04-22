@@ -64,7 +64,10 @@ object Dependencies {
   val akka_http = "com.typesafe.akka" % "akka-http_2.11" % "10.0.5"
   val rx_scala =  "io.reactivex" % "rxscala_2.11" % "0.26.5"
 
-
+  val jetty_server = "org.eclipse.jetty" % "jetty-server" % "9.4.3.v20170317"
+  val jetty_servlet = "org.eclipse.jetty" % "jetty-servlet" % "9.4.3.v20170317"
+  val jersey_core =  "org.glassfish.jersey.core" % "jersey-server" % "2.25.1"
+  val jersey_container = "org.glassfish.jersey.containers" % "jersey-container-servlet-core" % "2.25.1"
 
   val default_dependencies_seq = Seq(
     (spark_core).exclude("net.java.dev.jets3t", "jets3t") % Provided,
